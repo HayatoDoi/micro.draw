@@ -1,0 +1,24 @@
+version: '3.7'
+services:
+  webapp:
+    build: ./container/webapp
+    env_file: compose.env
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/webapp
+
+  mysql:
+    image: "mysql:5.6"
+    volumes:
+      - "./container/mysql:/var/lib/mysql"
+    env_file: compose.env
+
+  phpmyadmin:
+    image: "phpmyadmin/phpmyadmin"
+    environment:
+      - "PMA_ARBITRARY=1"
+      - "PMA_HOST=mysql"
+    env_file: compose.env
+    ports:
+       - 8080:80
